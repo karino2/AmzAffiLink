@@ -32,6 +32,15 @@ class LinkGenActivity : AppCompatActivity() {
 
     fun showMessage(msg : String) = Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
 
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        intent?.let {
+            if (it.action == Intent.ACTION_SEND) {
+                val url = urlConvert(trackingId, intent.getStringExtra("url"))
+                (findViewById(R.id.editTextUrl) as EditText).setText(url)
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +52,7 @@ class LinkGenActivity : AppCompatActivity() {
         }
 
         intent?.let {
-            if(it.action == Intent.ACTION_SEND) {
+            if (it.action == Intent.ACTION_SEND) {
                 val url = urlConvert(trackingId, intent.getStringExtra("url"))
                 (findViewById(R.id.editTextUrl) as EditText).setText(url)
             }
