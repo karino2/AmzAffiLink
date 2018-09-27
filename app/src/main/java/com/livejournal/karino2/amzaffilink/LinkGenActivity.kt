@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 
@@ -37,7 +38,7 @@ class LinkGenActivity : AppCompatActivity() {
         intent?.let {
             if (it.action == Intent.ACTION_SEND) {
                 val url = urlConvert(trackingId, intent.getStringExtra("url"))
-                (findViewById(R.id.editTextUrl) as EditText).setText(url)
+                (findViewById<EditText>(R.id.editTextUrl)).setText(url)
             }
         }
     }
@@ -54,17 +55,17 @@ class LinkGenActivity : AppCompatActivity() {
         intent?.let {
             if (it.action == Intent.ACTION_SEND) {
                 val url = urlConvert(trackingId, intent.getStringExtra("url"))
-                (findViewById(R.id.editTextUrl) as EditText).setText(url)
+                (findViewById<EditText>(R.id.editTextUrl)).setText(url)
             }
             if(it.action == Intent.ACTION_MAIN) {
                 showMessage("Please use this app from SHARE of amazon app.")
             }
         }
 
-        findViewById(R.id.buttonCopy).setOnClickListener {
+        findViewById<View>(R.id.buttonCopy).setOnClickListener {
             val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clip = ClipData.newPlainText("url", (findViewById(R.id.editTextUrl) as EditText).text.toString())
-            clipboard.setPrimaryClip(clip)
+            val clip = ClipData.newPlainText("url", (findViewById<EditText>(R.id.editTextUrl)).text.toString())
+            clipboard.primaryClip = clip
             showMessage("Link copied to clipboard")
         }
 
